@@ -1,30 +1,26 @@
 import requests
 
 headers = {
-    'authorization': 'Bearer tokengoeshere',
-    'Accept': 'application/json'
+    'Accept' : 'application/json',
+    'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImI4ODJiOTYzLTkzNmItNGFhNS05ZDExLTgzZTY5ZTYyMzRiZSIsImlhdCI6MTYwODM1NDM0NSwic3ViIjoiZGV2ZWxvcGVyLzViNWZjMWE1LTY2MjYtMjc2NS1kMmViLWVkMTYyMWY2YmFiOCIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjEwMy45Mi4xMTUuMzUiXSwidHlwZSI6ImNsaWVudCJ9XX0.SoqHBhvxHMfnhDVj1CQwNJfQR0XUaUOdU1Hs-FqF7dZI8UhNLctt68V58Qws4vPCrR6A5ypF5mbpdyQQRvIFyg'
+    
 }
 
-
 def get_user():
-    # this will get an account from the Clash of Clans API and return the user json blob
+    # return user profile information
     response = requests.get(
-        'https://api.clashofclans.com/v1/players/%2380J99Y8Y', headers=headers)
+    'https://api.clashofclans.com/v1/players/%23LRVGL2PLR', headers=headers)
     user_json = response.json()
-    print('Your best trophies were ' + str(user_json['bestTrophies']))
-    return user_json
+    print(user_json)
+
+ 
+def search_clan():
+        #submit a clan search
+        response = requests.get(
+            'https://api.clashofclans.com/v1/clans?name=Silent%20Darkfall', headers=headers)
+        clan_json = response.json()
+        for clan in clan_json['items'] :
+                print(clan['name'] + ': is level ' + str(clan['clanLevel']))
 
 
-def search_clans():
-    # clan search api
-    response = requests.get(
-        'https://api.clashofclans.com/v1/clans?name=new%20zealand%20gold', headers=headers)
-    clan_json = response.json()
-    # now to go into items
-    for clan in clan_json['items']:
-        print(clan['name'] + ' is level: ' + str(clan['clanLevel']))
-
-
-# these functions will be called
-get_user()
-search_clans()
+search_clan()
